@@ -6,9 +6,37 @@
   <title>Document</title>
 </head>
 <body>
+  <div id="sample">
+    <div>a</div>
+    <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+    </ul>
+  </div>
 
 <script>
 fetch('/data/sample.json').then(rs=>rs.json()).then(json=>console.log('s',json));
+
+const sample = document.querySelector('#sample');
+// const stack = [sample.firstElementChild];
+// console.log(stack);
+// let el;
+// while(el = stack.pop()) {
+//   console.log(el);
+//   if(el.firstElementChild) stack.push(el.firstElementChild);
+//   if(el.nextElementSibling) stack.push(el.nextElementSibling);
+// }
+
+// console.log('--------------------');
+// const scan = (el, node=[], {firstElementChild, nextElementSibling}=el)=> el && (
+//   console.log(el),
+//   firstElementChild && node.push(firstElementChild),
+//   nextElementSibling && node.push(nextElementSibling),
+//   scan(node.pop(), node)
+// );
+// scan(sample.firstElementChild);
+
 </script>
 </body>
 </html>
