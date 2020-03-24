@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <section>
+    <div>
+      <h1></h1>
+      <input type="text">
+      <button>add</button>
+    </div>
+  </section>
+
+  <script src="todo.utils.js"></script>
+  <script src="todo.app.js"></script>
+  <script src="todo.task.js"></script>
+  <script src="todo.renderer-01.js"></script>
+  <script>
+    const app = new App('todo list');
+    const run = renderer=> renderer.render();
+    // run(new DOMRenderer(app));
+    run(new CanvasRenderer(app));
+  </script>
+</body>
+</html>

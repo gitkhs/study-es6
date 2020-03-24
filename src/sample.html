@@ -4,29 +4,72 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    ul {list-style: none; padding:0; margin:0;}
+    ul> li {padding:1rem; border-bottom: .5px solid #aaa;}
+  </style>
 </head>
 <body>
+  <section>
+    <input type="text" id="url">
+    <button id="btn-data">btn-data</button>
+    <ul></ul>
+  </section>
+
+
 <script>
-// fetch('/data/sample.json').then(rs=>rs.json()).then(json=>console.log('s',json));
+const qs = (tag, el=document)=> el.querySelector(tag);
 
-// const sample = document.querySelector('#sample');
-// const stack = [sample.firstElementChild];
-// console.log(stack);
-// let el;
-// while(el = stack.pop()) {
-//   console.log(el);
-//   if(el.firstElementChild) stack.push(el.firstElementChild);
-//   if(el.nextElementSibling) stack.push(el.nextElementSibling);
-// }
+// proxy
+const observer = new Proxy({}, {
+  get(obj, prop) {
+    const target = document.getElementById(prop);
+    return target.value;
+  },
+  set(obj, prop, value) {
+    const target = document.getElementById(prop);
+    target.value = value;
+  },
+});
 
-// console.log('--------------------');
-// const scan = (el, node=[], {firstElementChild, nextElementSibling}=el)=> el && (
-//   console.log(el),
-//   firstElementChild && node.push(firstElementChild),
-//   nextElementSibling && node.push(nextElementSibling),
-//   scan(node.pop(), node)
-// );
-// scan(sample.firstElementChild);
+// url 입력 값 세팅
+observer.url = '/data/sample.json';
+
+// Generator
+const getJson = url=> fetch(url).then(rs=>rs.json());
+const asyncData = gen=> {
+  var iter = gen();
+  var {value, done} = iter.next();
+  value.then(data=> iter.next(data)); 
+};
+
+
+// data 버튼 클릭 이벤트
+document.getElementById('btn-data').onclick = async function () {
+  const {url} = observer;
+
+  // 기존 ajax
+  console.log(11);
+  fetch(url)
+  .then(rs=>rs.json())
+  .then(json=> {
+    console.log(12, json);
+  });
+  console.log(13);
+
+  // 제너레이터 이용 => 비동기를 동기적으로 사용
+  asyncData(function* (){
+    console.log(21);
+    const json = yield getJson(url);
+    console.log(22, json);
+  });
+
+  // async, await 구분을 이용
+  console.log(31);
+  const result = await fetch(url);
+  const json = await result.json();
+  console.log(32, json);
+};
 
 </script>
 </body>
