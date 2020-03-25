@@ -192,3 +192,10 @@ p.a = 37;
 
 console.log(target.a);
 ```
+
+## 샘플
+
+* [es6 샘플](https://gitkhs.github.io/study-es6/src/sample.html)
+* [todo list](https://gitkhs.github.io/study-es6/src/todo.html)
+* 코드연습 [수정전](https://code.dcoder.tech/files/code/5e795f738f29013b25d3e65f/refactoring_old) ->
+[수정후](https://code.dcoder.tech/files/code/5e79606a8f29013b25d3e690/refactoring_new)

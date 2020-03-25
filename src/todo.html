@@ -15,14 +15,44 @@
   </section>
 
   <script src="todo.utils.js"></script>
-  <script src="todo.app.js"></script>
   <script src="todo.task.js"></script>
+  <script src="todo.folder.js"></script>
+  <script src="todo.app.js"></script>
+  <!--
   <script src="todo.renderer-01.js"></script>
   <script>
     const app = new App('todo list');
     const run = renderer=> renderer.render();
-    // run(new DOMRenderer(app));
-    run(new CanvasRenderer(app));
+    run(new DOMRenderer(app));
+    // run(new CanvasRenderer(app));
+  </script>
+  -->
+
+  <!--
+  <script src="todo.renderer-02.js"></script>
+  <script>
+    new DOMRenderer(new App('todo')).render();
+  </script>
+  -->
+
+  <!--
+  <script src="todo.renderer-03.js"></script>
+  <script>
+    new DOMRenderer(new App('todo')).render();
+  </script>
+  -->
+
+  <script src="todo.history.js"></script>
+  <script src="todo.renderer-04.js"></script>
+  <script>
+    new DOMRenderer(new App('todo'), new class extends History {
+      addFolder(app, title) {this._add(new AddFolder(app, title))}
+      removeFolder(app, folder) {this._add(new RemoveFolder(app, folder))}
+      selectedFolder(current, folder, proc) {this._add(new SelectedFolder(current, folder, proc))}
+      addTask(folder, title) {this._add(new AddTask(folder, title))}
+      removeTask(folder, task) {this._add(new RemoveTask(folder, task))}
+      toggleTaskComplete(task) {this._add(new ToggleTaskComplete(task))}
+    }).render();
   </script>
 </body>
 </html>
